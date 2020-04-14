@@ -1,12 +1,18 @@
 import requests
 from credentials import *
 import os
+import json
 
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
 
 class Youtubify:
+    def __init__(self):
+       # =self.youtube_client()
+        pass
+
+
     #first get the playlist of the user from spotify
     def get_spotify_playlist(self):
        url='https://api.spotify.com/v1/users/{}/playlists'.format(user_id)
@@ -28,6 +34,7 @@ class Youtubify:
            self.ids.append(play[i]['id'])
 
        self.show_playlists(lis)
+       #self.youtube_client()
 
 
 
@@ -47,7 +54,7 @@ class Youtubify:
 
     def ask_choice(self,arg):
         ch=int(input("\n enter playlist Number "))
-        self.playlist_name=self.arg[ch]
+        self.playlist_name=arg[ch]
 
         print("creating a playlist in youtube  named '{}' ".format(arg[ch]))
         self.get_playlist_tracks(ch,arg)
@@ -71,19 +78,29 @@ class Youtubify:
                                 })
         playlist = response.json()
         play = playlist['items']
+        self.no_of_tracks=len(play)
         artists = []
         song_name = []
+        trackname=[]
         print("Getting tracks of the playlist '{}' ".format(arg[choice]))
         for i in range(0, len(play)):
             artists.append(play[i]['track']['album']['artists'][0]['name'])
             song_name.append(play[i]['track']['name'])
 
             print(artists[i], " ", song_name[i])
+        self.trackname=[' '.join(x) for x in zip(artists,song_name)]
+        self.youtube_client()
 
 
-        return(song_name,artists)
+
+
+
+        return(self.trackname,self.no_of_tracks)
 
     def youtube_client(self):
+        scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
+        # Disable OAuthlib's HTTPS verification when running locally.
+        # *DO NOT* leave this option enabled in production.
         os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
         api_service_name = "youtube"
@@ -98,28 +115,78 @@ class Youtubify:
             api_service_name, api_version, credentials=credentials)
 
         request = youtube.playlists().insert(
+            part="snippet",
             body={
                 "snippet": {
                     "title": "{}".format(self.playlist_name),
-                    "description": "This is a Playlist created direct from Spotify playlist",
-                    "tags": [
-
-                    ],
-                    "defaultLanguage": "en"
-                },
-                "status": {
-                    "privacyStatus": "private"
+                    "description": "automatically created by python"
                 }
-
             }
         )
+        response=request.execute()
+        self.get_tracks_id(youtube)
+
+        return()
+    def get_tracks_id(self,youtube):
+        list_id=[]
+        for i in range(0,self.no_of_tracks):
+            request = youtube.search().list(
+                part="snippet",
+                maxResults=1,
+                q="{}".format(self.trackname[i])
+                )
+            response = request.execute()
+            play=response['items']
+            list_id.append(play[0]['id']['videoId'])
+            self.listid=list_id
+
+        self.get_playlist_id(youtube)
+
+
+        return(self.listid)
+
+    def get_playlist_id(self,youtube):
+        request = youtube.playlists().list(
+            part="id,snippet",
+            mine=True
+        )
         response = request.execute()
+        play=response['items']
+        titlelist = []
+        ids = []
+        it=len(play)
+        for i in range(0, it):
+            titlelist.append(play[i]['snippet']['title'])
+            ids.append(play[i]['id'])
 
-        print(response)
 
+        for i in range(0, it):
+            if self.playlist_name == play[i]['snippet']['title']:
+                d = i
+                break
+        print(d)
+        ytplaylist_id=ids[d]
+        self.add_tracks_to_yt_playlist(ytplaylist_id)
 
+        return(ytplaylist_id,youtube)
 
-
+    def add_tracks_to_yt_playlist(self,ytplaylist_id,youtube):
+        for i in range(0,self.no_of_tracks):
+            request = youtube.playlistItems().insert(
+                part="snippet",
+                body={
+                    "snippet": {
+                        "playlistId": "{}".format(ytplaylist_id),
+                        "position": i,
+                        "resourceId": {
+                            "kind": "youtube#video",
+                            "videoId": "{}".format(self.listid)
+                        }
+                    }
+                }
+            )
+        response = request.execute()
+        return(response)
 
 
 
