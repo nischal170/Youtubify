@@ -1,5 +1,5 @@
 import requests
-from credentials import *
+from credentials import *#Importing everything from crediantials file
 import os
 import json
 
@@ -9,11 +9,11 @@ import googleapiclient.errors
 
 class Youtubify:
     def __init__(self):
-       # =self.youtube_client()
         pass
 
 
     #first get the playlist of the user from spotify
+
     def get_spotify_playlist(self):
        url='https://api.spotify.com/v1/users/{}/playlists'.format(user_id)
        response=requests.get(url,
@@ -34,14 +34,12 @@ class Youtubify:
            self.ids.append(play[i]['id'])
 
        self.show_playlists(lis)
-       #self.youtube_client()
-
-
 
 
 
        return(lis,self.ids)
 
+#showing the playlists of the user
 
 
     def show_playlists(self,arg):
@@ -52,6 +50,8 @@ class Youtubify:
         self.ask_choice(arg)
         return()
 
+#select the playlist from the list
+
     def ask_choice(self,arg):
         ch=int(input("\n enter playlist Number "))
         self.playlist_name=arg[ch]
@@ -60,6 +60,7 @@ class Youtubify:
         self.get_playlist_tracks(ch,arg)
         return(ch,self.playlist_name)
 
+#getting all the tracks from the selected playlist
 
     def get_playlist_tracks(self,choice,arg):
 
@@ -88,7 +89,7 @@ class Youtubify:
             song_name.append(play[i]['track']['name'])
 
             print(artists[i], " ", song_name[i])
-        self.trackname=[' '.join(x) for x in zip(artists,song_name)]
+        self.trackname=[' '.join(x) for x in zip(artists,song_name)]#merging artists and song_name lists  into a single list
         self.youtube_client()
 
 
@@ -96,6 +97,8 @@ class Youtubify:
 
 
         return(self.trackname,self.no_of_tracks)
+
+    #setting up youtube client and creating empty  playlist in youtube
 
     def youtube_client(self):
         scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
@@ -127,6 +130,8 @@ class Youtubify:
         self.get_tracks_id(youtube)
 
         return()
+
+    #searching the obtained tracks in youtube and keepind the tracks id in list
     def get_tracks_id(self,youtube):
         list_id=[]
         for i in range(0,self.no_of_tracks):
@@ -144,6 +149,8 @@ class Youtubify:
 
 
         return(self.listid)
+
+    #getting the id of playlist which we have created  earlier
 
     def get_playlist_id(self,youtube):
         request = youtube.playlists().list(
@@ -169,6 +176,8 @@ class Youtubify:
         self.add_tracks_to_yt_playlist(ytplaylist_id)
 
         return(ytplaylist_id,youtube)
+
+    #adding the tracks to the playlist with their track id
 
     def add_tracks_to_yt_playlist(self,ytplaylist_id,youtube):
         for i in range(0,self.no_of_tracks):
