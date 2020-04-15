@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
   - Get **client_id** and **client_secret** 
 
-     - [Watch the video here](https://youtube.com/)
+     - [Watch the video here](https://youtu.be/QoFyqD2LXk0)
      
      
 ## How to use
