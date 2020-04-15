@@ -27,6 +27,13 @@ pip install -r requirements.txt
 
     - [Get your Spotify username](https://www.spotify.com/us/account/overview/)
     
+    - [Get Your Spotify Client Id](https://developer.spotify.com/dashboard/applications)
+    
+      - Click on **Create a client ID**
+      - Type any name in **App or Hardware Name**
+      - Type any description in **App or Hardware Description**
+      - Tick **Desktop APP* 
+    
     - [Get Your Oauth Spotify token](https://developer.spotify.com/console/get-playlists/)
       
       - Click **Get Token** Button
