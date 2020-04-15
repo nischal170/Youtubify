@@ -49,7 +49,7 @@ pip install -r requirements.txt
 ## How to use
   Run ```Youtubify.py``` and follow the instructions 
   
-  You'll be asked to authenticate,authenticate and provide the authentication token.
+  You'll be asked to authentication,authenticate and provide the authentication token.
   
   
   
