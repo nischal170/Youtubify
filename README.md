@@ -40,5 +40,8 @@ pip install -r requirements.txt
       ![alt text](images/oauthtoken2.png)
       
       
+- Get **client_id** and **client_secret**
+      
+      
     
     
