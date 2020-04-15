@@ -143,16 +143,16 @@ class Youtubify:
             response = request.execute()
             play=response['items']
             list_id.append(play[0]['id']['videoId'])
-            self.listid=list_id
+            listid=list_id
 
-        self.get_playlist_id(youtube)
+        self.get_playlist_id(youtube,listid)
 
 
-        return(self.listid)
+        return(listid)
 
     #getting the id of playlist which we have created  earlier
 
-    def get_playlist_id(self,youtube):
+    def get_playlist_id(self,youtube,listid):
         request = youtube.playlists().list(
             part="id,snippet",
             mine=True
@@ -173,13 +173,13 @@ class Youtubify:
                 break
         print(d)
         ytplaylist_id=ids[d]
-        self.add_tracks_to_yt_playlist(ytplaylist_id)
+        self.add_tracks_to_yt_playlist(ytplaylist_id,youtube,listid)
 
         return(ytplaylist_id,youtube)
 
     #adding the tracks to the playlist with their track id
 
-    def add_tracks_to_yt_playlist(self,ytplaylist_id,youtube):
+    def add_tracks_to_yt_playlist(self,ytplaylist_id,youtube,listid):
         for i in range(0,self.no_of_tracks):
             request = youtube.playlistItems().insert(
                 part="snippet",
@@ -189,12 +189,13 @@ class Youtubify:
                         "position": i,
                         "resourceId": {
                             "kind": "youtube#video",
-                            "videoId": "{}".format(self.listid)
+                            "videoId": "{}".format(listid[i])
                         }
                     }
                 }
             )
-        response = request.execute()
+            response = request.execute()
+
         return(response)
 
 
