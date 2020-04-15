@@ -32,7 +32,7 @@ pip install -r requirements.txt
       - Click on **Create a client ID**
       - Type any name in **App or Hardware Name**
       - Type any description in **App or Hardware Description**
-      - Tick **Desktop APP* 
+      - Tick **Desktop APP**
     
     - [Get Your Oauth Spotify token](https://developer.spotify.com/console/get-playlists/)
       
