@@ -55,7 +55,8 @@ pip install -r requirements.txt
   
   ## Note
    - The spotify token expires every one hour,so if you find out any error including **['items']** this is because of the expiration of spotify token.
-    - If you have too many tracks in spotify playlist the per day quota for the api request may exceed,this is the main problem for playlist having large number of tracks.
+   
+   - If you have too many tracks in spotify playlist the per day quota for the api request may exceed,this is the main problem for playlist having large number of tracks.
   
   
      
