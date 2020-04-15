@@ -8,7 +8,7 @@ A Python Script to extract all the playlist from user's spotify id, and create t
 
 - [Spotify API](https://developer.spotify.com/)
 
-- [Youtube API](https://developers.google.com/youtube/)
+- [Youtube Data API v3](https://developers.google.com/youtube/v3)
 
 ## Installing
 
@@ -23,7 +23,7 @@ A Python Script to extract all the playlist from user's spotify id, and create t
   ``` html
 pip install -r requirements.txt
 ```
-- Copy You Spotify User ID and Oauth Token From Spotfiy and paste it to  credentials.py 
+- Copy Your Spotify User ID and Oauth Token From Spotfiy and paste it to  credentials.py 
 
     - [Get your Spotify username](https://www.spotify.com/us/account/overview/)
     
@@ -39,8 +39,34 @@ pip install -r requirements.txt
       
       ![alt text](images/oauthtoken2.png)
       
-      
-- Get **client_id** and **client_secret**
+- Copy Your **client_id** and **client_secret** to **CLIENT_SECRET_FILE.json** file
+
+  - Get **client_id** and **client_secret** 
+
+     - [Watch the video here](https://youtube.com/)
+     
+     
+## How to use
+  Run ```Youtubify.py``` and follow the instructions 
+  
+  You'll be asked to authenticate,authenticate and provide the authentication token.
+  
+  
+  
+  ## Note
+   - The spotify token expires every one hour,so if you find out any error including **['items']** this is because of the expiration of spotify token.
+    - If you have too many tracks in spotify playlist the per day quota for the api request may exceed,this is the main problem for playlist having large number of tracks.
+  
+  
+     
+     
+     
+     
+     
+
+     
+  
+  
       
       
     
