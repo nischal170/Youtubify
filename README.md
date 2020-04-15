@@ -1,5 +1,5 @@
 # Youtubify
-A Python Script to extract all the playlist from user's spotify id, and create the same selected playlist in Youtube.
+A Python Script which extracts all the playlist from user's spotify id, and recreate the same selected playlist in Youtube.
 
 
 ## Tools used
