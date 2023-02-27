@@ -1,8 +1,8 @@
 from flask import Flask,render_template,redirect,request
 import requests
 import urllib,json,base64
-client_id='3c09b102f81b4cc0bfbe1720d41278f1'
-client_secret='68c4e2f213994766bb584ca077e7cefb'
+client_id=''
+client_secret=''
 authorization_url='https://accounts.spotify.com/authorize?'
 redirect_uri= "http://localhost:5000/callback/",
 scope='playlist-read-private user-read-private user-read-email user-library-read user-library-read'
